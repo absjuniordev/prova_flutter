@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:target_sistemas/repositories/mock_auth_serivce.dart';
 import 'package:target_sistemas/shared/constant/custom_color.dart';
 import '../../page/information_page.dart';
 
@@ -14,6 +15,7 @@ class CustomElevatedButtom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mockAuthService = MockAuthService();
     return ElevatedButton(
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(
@@ -28,9 +30,10 @@ class CustomElevatedButtom extends StatelessWidget {
           ),
         ),
       ),
-      onPressed: () {
+      onPressed: () async {
         final usuario = controllerUsuario.text;
         final senha = controllerSenha.text;
+        final loginCorreto = mockAuthService.login(usuario, senha);
 
         if (senha.length < 2) {
           showDialog(
@@ -56,12 +59,16 @@ class CustomElevatedButtom extends StatelessWidget {
               );
             },
           );
-        } else if (!usuario.endsWith(' ') && !senha.endsWith(' ')) {
+        }
+
+        if (await loginCorreto) {
+          // ignore: use_build_context_synchronously
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (builder) => const InformationPage(),
-              ));
+            context,
+            MaterialPageRoute(
+              builder: (builder) => const InformationPage(),
+            ),
+          );
         }
       },
       child: Text(
