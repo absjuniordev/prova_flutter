@@ -1,15 +1,19 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-
+import 'package:flutter/services.dart';
 import 'package:target_sistemas/shared/constant/custom_color.dart';
 
 class CustomTextField extends StatelessWidget {
   final String text;
   final Icon icon;
+  final TextEditingController controller;
+  final bool? inputSenha;
+
   const CustomTextField({
     Key? key,
     required this.text,
     required this.icon,
+    required this.controller,
+    this.inputSenha,
   }) : super(key: key);
 
   @override
@@ -23,13 +27,20 @@ class CustomTextField extends StatelessWidget {
             text,
             style: TextStyle(
               fontSize: 20,
+              fontWeight: FontWeight.w400,
               color: CustomColor().getFillColor(),
             ),
           ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 50),
-          child: TextField(
+          child: TextFormField(
+            inputFormatters: [
+              LengthLimitingTextInputFormatter(20),
+              inputSenha == true
+                  ? FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]'))
+                  : FilteringTextInputFormatter.singleLineFormatter
+            ],
             decoration: InputDecoration(
               label: icon,
               border: OutlineInputBorder(
@@ -38,6 +49,7 @@ class CustomTextField extends StatelessWidget {
               filled: true,
               fillColor: CustomColor().getFillColor(),
             ),
+            controller: controller,
           ),
         ),
       ],

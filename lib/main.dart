@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:target_sistemas/page/tela_login.dart';
+import 'package:target_sistemas/page/login_page.dart';
 
 void main() {
   runApp(const MainApp());
