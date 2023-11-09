@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:target_sistemas/page/information_page.dart';
+import 'package:target_sistemas/repositories/web_repository.dart';
 import 'package:target_sistemas/shared/constant/custom_color.dart';
-
+import '../shared/widgets/custom_elevated_button.dart';
 import '../shared/widgets/custom_textfield.dart';
 
 class TelaLogin extends StatelessWidget {
@@ -11,6 +11,7 @@ class TelaLogin extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController controllerUsuario = TextEditingController(text: "");
     TextEditingController controllerSenha = TextEditingController(text: "");
+
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -48,69 +49,17 @@ class TelaLogin extends StatelessWidget {
                 const SizedBox(
                   height: 30,
                 ),
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                      CustomColor().getButtomColor(),
-                    ),
-                    minimumSize: MaterialStateProperty.all(
-                      const Size(200, 48),
-                    ),
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                  ),
-                  onPressed: () {
-                    final usuario = controllerUsuario.text;
-                    final senha = controllerSenha.text;
-                    if (senha.length < 2) {
-                      showDialog(
-                        context: context,
-                        builder: (builder) {
-                          return const AlertDialog(
-                            title: Text("Atenção"),
-                            content: Text(
-                              "A senha não pode ter menos que dois caracteres",
-                            ),
-                          );
-                        },
-                      );
-                    }
-                    if (usuario.endsWith(' ') && senha.endsWith(' ')) {
-                      showDialog(
-                        context: context,
-                        builder: (builder) {
-                          return const AlertDialog(
-                            title: Text("Atenção"),
-                            content: Text(
-                              "A senha não pode ter menos que dois caracteres",
-                            ),
-                          );
-                        },
-                      );
-                    } else if (!usuario.endsWith(' ') && !senha.endsWith(' ')) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (builder) => const InformationPage()));
-                    }
-                  },
-                  child: Text(
-                    "Entrar",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 20,
-                      color: CustomColor().getFillColor(),
-                    ),
-                  ),
+                CustomElevatedButtom(
+                  controllerSenha: controllerSenha,
+                  controllerUsuario: controllerUsuario,
                 ),
                 const Spacer(
                   flex: 2,
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    WebRepository().lounchURL();
+                  },
                   child: Text(
                     "Politica de Privacidade",
                     style: TextStyle(
