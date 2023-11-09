@@ -10,8 +10,15 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: TelaLogin(),
+    return MaterialApp(
+      title: 'Target Sistemas',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.green,
+        ),
+      ),
+      debugShowCheckedModeBanner: false,
+      home: const TelaLogin(),
     );
   }
 }
