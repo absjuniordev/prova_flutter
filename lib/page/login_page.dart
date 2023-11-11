@@ -4,8 +4,8 @@ import 'package:target_sistemas/shared/constant/custom_color.dart';
 import '../shared/widgets/custom_elevated_button.dart';
 import '../shared/widgets/custom_textfield.dart';
 
-class TelaLogin extends StatelessWidget {
-  const TelaLogin({super.key});
+class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {

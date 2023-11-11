@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:target_sistemas/page/login_page.dart';
+
+import 'page/splahs_page.dart';
 
 void main() {
   runApp(const MainApp());
@@ -18,7 +19,7 @@ class MainApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: const TelaLogin(),
+      home: const SplashPage(),
     );
   }
 }

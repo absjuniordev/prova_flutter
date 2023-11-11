@@ -1,9 +1,14 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+
 import 'package:target_sistemas/repositories/mock_auth_serivce.dart';
 import 'package:target_sistemas/shared/constant/custom_color.dart';
+
 import '../../page/information_page.dart';
 
-class CustomElevatedButtom extends StatelessWidget {
+class CustomElevatedButtom extends StatefulWidget {
   final TextEditingController controllerUsuario;
   final TextEditingController controllerSenha;
 
@@ -14,8 +19,21 @@ class CustomElevatedButtom extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _CustomElevatedButtomState createState() => _CustomElevatedButtomState();
+}
+
+class _CustomElevatedButtomState extends State<CustomElevatedButtom> {
+  final MockAuthService mockAuthService = MockAuthService();
+  late bool _loginInProgress;
+
+  @override
+  void initState() {
+    super.initState();
+    _loginInProgress = false;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final mockAuthService = MockAuthService();
     return ElevatedButton(
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(
@@ -30,55 +48,67 @@ class CustomElevatedButtom extends StatelessWidget {
           ),
         ),
       ),
-      onPressed: () async {
-        final usuario = controllerUsuario.text;
-        final senha = controllerSenha.text;
-        final loginCorreto = mockAuthService.login(usuario, senha);
-
-        if (senha.length < 2) {
-          showDialog(
-            context: context,
-            builder: (builder) {
-              return const AlertDialog(
-                title: Text("Atenção"),
-                content: Text(
-                  "A Senha não pode ter menos que dois caracteres",
-                ),
-              );
-            },
-          );
-        } else if (usuario.endsWith(' ')) {
-          showDialog(
-            context: context,
-            builder: (builder) {
-              return const AlertDialog(
-                title: Text("Atenção"),
-                content: Text(
-                  "O nome de Usuario não pode conter espaços",
-                ),
-              );
-            },
-          );
-        }
-
-        if (await loginCorreto) {
-          // ignore: use_build_context_synchronously
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (builder) => const InformationPage(),
+      onPressed: _loginInProgress ? null : () => _handleLogin(context),
+      child: _loginInProgress
+          ? const CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            )
+          : Text(
+              "Entrar",
+              style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 20,
+                color: CustomColor().getFillColor(),
+              ),
             ),
-          );
-        }
-      },
-      child: Text(
-        "Entrar",
-        style: TextStyle(
-          fontWeight: FontWeight.w400,
-          fontSize: 20,
-          color: CustomColor().getFillColor(),
+    );
+  }
+
+  Future<void> _handleLogin(BuildContext context) async {
+    setState(() {
+      _loginInProgress = true;
+    });
+
+    final loginCorreto = await mockAuthService.login(
+        widget.controllerUsuario.text, widget.controllerSenha.text);
+
+    setState(() {
+      _loginInProgress = false;
+    });
+
+    if (!isPasswordValid(widget.controllerSenha.text)) {
+      showAlertDialog(
+          context, "Atenção", "A senha não pode ter menos que dois caracteres");
+    } else if (widget.controllerUsuario.text.contains(' ')) {
+      showAlertDialog(
+          context, "Atenção", "O nome de usuário não pode conter espaços");
+    }
+
+    if (loginCorreto) {
+      Navigator.push(
+        context,
+        PageTransition(
+          duration: const Duration(milliseconds: 999),
+          type: PageTransitionType.fade,
+          child: const InformationPage(),
         ),
-      ),
+      );
+    }
+  }
+
+  bool isPasswordValid(String password) {
+    return password.length >= 2;
+  }
+
+  void showAlertDialog(BuildContext context, String title, String content) {
+    showDialog(
+      context: context,
+      builder: (builder) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(content),
+        );
+      },
     );
   }
 }
