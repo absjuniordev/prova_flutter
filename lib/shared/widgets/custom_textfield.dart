@@ -1,21 +1,33 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:target_sistemas/shared/constant/custom_color.dart';
 
-class CustomTextField extends StatelessWidget {
+class CustomTextField extends StatefulWidget {
   final String text;
   final Icon icon;
+  final bool? suffixIcon;
   final TextEditingController controller;
   final bool? inputSenha;
+  final bool? obscureText;
 
   const CustomTextField({
     Key? key,
     required this.text,
     required this.icon,
+    this.suffixIcon,
     required this.controller,
     this.inputSenha,
+    this.obscureText,
   }) : super(key: key);
 
+  @override
+  State<CustomTextField> createState() => _CustomTextFieldState();
+}
+
+class _CustomTextFieldState extends State<CustomTextField> {
+  bool _showPassWord = false;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -24,7 +36,7 @@ class CustomTextField extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 60, bottom: 10),
           child: Text(
-            text,
+            widget.text,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w400,
@@ -37,19 +49,38 @@ class CustomTextField extends StatelessWidget {
           child: TextFormField(
             inputFormatters: [
               LengthLimitingTextInputFormatter(20),
-              inputSenha == true
+              widget.inputSenha == true
                   ? FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]'))
                   : FilteringTextInputFormatter.singleLineFormatter
             ],
             decoration: InputDecoration(
-              label: icon,
+              prefixIcon: widget.icon,
+              suffixIcon: widget.suffixIcon == true
+                  ? InkWell(
+                      child: _showPassWord == false
+                          ? const Icon(
+                              Icons.visibility_off,
+                              color: Colors.black,
+                            )
+                          : const Icon(
+                              Icons.visibility,
+                              color: Colors.black,
+                            ),
+                      onTap: () {
+                        setState(() {
+                          _showPassWord = !_showPassWord;
+                        });
+                      },
+                    )
+                  : null,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
               filled: true,
               fillColor: CustomColor().getFillColor(),
             ),
-            controller: controller,
+            controller: widget.controller,
+            obscureText: _showPassWord == true ? false : true,
           ),
         ),
       ],

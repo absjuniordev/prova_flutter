@@ -34,16 +34,24 @@ class LoginPage extends StatelessWidget {
                 ),
                 CustomTextField(
                   text: "Usuário",
-                  icon: const Icon(Icons.person),
+                  icon: const Icon(
+                    Icons.person,
+                    color: Colors.black,
+                  ),
                   controller: controllerUsuario,
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 CustomTextField(
+                  obscureText: true,
                   inputSenha: true,
+                  suffixIcon: true,
                   text: "Senha",
-                  icon: const Icon(Icons.lock),
+                  icon: const Icon(
+                    Icons.lock,
+                    color: Colors.black,
+                  ),
                   controller: controllerSenha,
                 ),
                 const SizedBox(
