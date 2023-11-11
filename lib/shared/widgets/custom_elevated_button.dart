@@ -93,6 +93,8 @@ class _CustomElevatedButtomState extends State<CustomElevatedButtom> {
           child: const InformationPage(),
         ),
       );
+    } else {
+      showAlertDialog(context, "Atenção!", "Usuario não cadastrado");
     }
   }
 
