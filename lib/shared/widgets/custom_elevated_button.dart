@@ -93,7 +93,9 @@ class _CustomElevatedButtomState extends State<CustomElevatedButtom> {
           child: const InformationPage(),
         ),
       );
-    } else {
+    } else if (!loginCorreto &&
+        widget.controllerUsuario.text.isNotEmpty &&
+        widget.controllerSenha.text.isNotEmpty) {
       showAlertDialog(context, "Atenção!", "Usuario não cadastrado");
     }
   }

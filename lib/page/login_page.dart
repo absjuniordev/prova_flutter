@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:target_sistemas/repositories/web_repository.dart';
 import 'package:target_sistemas/shared/constant/custom_color.dart';
+import 'package:target_sistemas/shared/widgets/custom_text_button.dart';
 import '../shared/widgets/custom_elevated_button.dart';
 import '../shared/widgets/custom_textfield.dart';
 
@@ -9,8 +9,9 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController controllerUsuario = TextEditingController(text: "");
-    TextEditingController controllerSenha = TextEditingController(text: "");
+    TextEditingController controllerUsuario =
+        TextEditingController(text: "abs.junnior");
+    TextEditingController controllerSenha = TextEditingController(text: "1234");
 
     return SafeArea(
       child: Scaffold(
@@ -44,7 +45,6 @@ class LoginPage extends StatelessWidget {
                   height: 20,
                 ),
                 CustomTextField(
-                  obscureText: true,
                   inputSenha: true,
                   suffixIcon: true,
                   text: "Senha",
@@ -64,19 +64,11 @@ class LoginPage extends StatelessWidget {
                 const Spacer(
                   flex: 2,
                 ),
-                TextButton(
-                  onPressed: () async {
-                    WebRepository().lounchURL();
-                  },
-                  child: Text(
-                    "Politica de Privacidade",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
-                      color: CustomColor().getFillColor(),
-                    ),
-                  ),
-                ),
+                const CustomTextButton(
+                  text_1:
+                      "Este link irá te direcionar para uma página externa, deseja continuar?",
+                  text_2: "Politica de Privacidade",
+                )
               ],
             ),
           ),

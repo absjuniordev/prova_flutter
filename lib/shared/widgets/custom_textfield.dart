@@ -10,7 +10,6 @@ class CustomTextField extends StatefulWidget {
   final bool? suffixIcon;
   final TextEditingController controller;
   final bool? inputSenha;
-  final bool? obscureText;
 
   const CustomTextField({
     Key? key,
@@ -19,7 +18,6 @@ class CustomTextField extends StatefulWidget {
     this.suffixIcon,
     required this.controller,
     this.inputSenha,
-    this.obscureText,
   }) : super(key: key);
 
   @override
@@ -59,11 +57,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   ? InkWell(
                       child: _showPassWord == false
                           ? const Icon(
-                              Icons.visibility_off,
+                              Icons.visibility,
                               color: Colors.black,
                             )
                           : const Icon(
-                              Icons.visibility,
+                              Icons.visibility_off,
                               color: Colors.black,
                             ),
                       onTap: () {
@@ -80,7 +78,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               fillColor: CustomColor().getFillColor(),
             ),
             controller: widget.controller,
-            obscureText: _showPassWord == true ? false : true,
+            obscureText: _showPassWord == false ? false : true,
           ),
         ),
       ],
