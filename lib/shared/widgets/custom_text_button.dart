@@ -18,29 +18,30 @@ class CustomTextButton extends StatelessWidget {
     return TextButton(
       onPressed: () async {
         showDialog(
-            context: context,
-            builder: (builder) {
-              return AlertDialog(
-                title: const Text("Alerta"),
-                content: Text(
-                  text_1,
+          context: context,
+          builder: (builder) {
+            return AlertDialog(
+              title: const Text("Alerta"),
+              content: Text(
+                text_1,
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    WebRepository().lounchURL();
+                  },
+                  child: const Text("Sim"),
                 ),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      WebRepository().lounchURL();
-                    },
-                    child: const Text("Sim"),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text("Não"),
-                  ),
-                ],
-              );
-            });
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Não"),
+                ),
+              ],
+            );
+          },
+        );
       },
       child: Text(
         text_2,

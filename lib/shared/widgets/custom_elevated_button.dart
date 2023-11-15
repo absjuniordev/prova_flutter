@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -7,6 +5,7 @@ import 'package:target_sistemas/repositories/mock_auth_serivce.dart';
 import 'package:target_sistemas/shared/constant/custom_color.dart';
 
 import '../../page/information_page.dart';
+import '../custom_show_alert.dart';
 
 class CustomElevatedButtom extends StatefulWidget {
   final TextEditingController controllerUsuario;
@@ -102,17 +101,5 @@ class _CustomElevatedButtomState extends State<CustomElevatedButtom> {
 
   bool isPasswordValid(String password) {
     return password.length >= 2;
-  }
-
-  void showAlertDialog(BuildContext context, String title, String content) {
-    showDialog(
-      context: context,
-      builder: (builder) {
-        return AlertDialog(
-          title: Text(title),
-          content: Text(content),
-        );
-      },
-    );
   }
 }

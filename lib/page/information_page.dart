@@ -10,21 +10,23 @@ class InformationPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: Container(
+          height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.bottomCenter,
               end: Alignment.topCenter,
               colors: [
                 CustomColor().getGradientSecColor(),
-                CustomColor().getGradientMainColor()
+                CustomColor().getGradientMainColor(),
               ],
             ),
           ),
-          child: Column(
+          child: ListView(
             children: [
+              const SizedBox(height: 20),
               Container(
                 margin:
-                    const EdgeInsets.symmetric(vertical: 50, horizontal: 35),
+                    const EdgeInsets.symmetric(vertical: 70, horizontal: 35),
                 height: MediaQuery.of(context).size.height / 2,
                 decoration: BoxDecoration(
                   color: CustomColor().getFillColor(),
@@ -57,6 +59,7 @@ class InformationPage extends StatelessWidget {
                   ),
                 ),
               ),
+              const SizedBox(height: 110),
               const CustomTextButton(
                 text_1:
                     "Este link irá te direcionar para uma página externa, deseja continuar?",
