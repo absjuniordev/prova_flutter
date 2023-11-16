@@ -12,6 +12,7 @@ dependencies:
   flutter_animate: ^4.2.0+1
   flutter_inappwebview: ^5.8.0
   page_transition: ^2.1.0
+  shared_preferences: ^2.2.2
   url_launcher: ^6.2.1
  
   

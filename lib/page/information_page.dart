@@ -1,9 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:target_sistemas/model/text_model.dart';
 import 'package:target_sistemas/shared/constant/custom_color.dart';
+import '../repositories/data/service/storage_service.dart';
+import '../shared/custom_show_alert.dart';
 import '../shared/widgets/custom_text_button.dart';
 
-class InformationPage extends StatelessWidget {
+class InformationPage extends StatefulWidget {
   const InformationPage({super.key});
+
+  @override
+  State<InformationPage> createState() => _InformationPageState();
+}
+
+class _InformationPageState extends State<InformationPage> {
+  StorageService storage = StorageService();
+  var controllerText = TextEditingController(text: "");
+  var _listText = [];
+
+  @override
+  void initState() {
+    super.initState();
+    obter();
+  }
+
+  obter() async {
+    _listText = await storage.getTextList();
+
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +50,7 @@ class InformationPage extends StatelessWidget {
               const SizedBox(height: 20),
               Container(
                 margin:
-                    const EdgeInsets.symmetric(vertical: 70, horizontal: 30),
+                    const EdgeInsets.symmetric(vertical: 60, horizontal: 30),
                 height: MediaQuery.of(context).size.height / 2,
                 decoration: BoxDecoration(
                   color: CustomColor().getFillColor(),
@@ -38,8 +62,10 @@ class InformationPage extends StatelessWidget {
                   ),
                 ),
                 child: ListView.builder(
-                  itemCount: 10,
+                  itemCount: _listText.length,
                   itemBuilder: (itemBuilder, i) {
+                    var list = _listText[i];
+                    obter();
                     return Card(
                       color: CustomColor().getFillColor(),
                       margin: const EdgeInsets.all(8),
@@ -48,9 +74,9 @@ class InformationPage extends StatelessWidget {
                         child: Row(
                           children: [
                             const Spacer(flex: 1),
-                            const Text(
-                              "Texto Digitado 1",
-                              style: TextStyle(fontSize: 20),
+                            Text(
+                              list,
+                              style: const TextStyle(fontSize: 20),
                             ),
                             const Spacer(flex: 3),
                             InkWell(
@@ -76,9 +102,25 @@ class InformationPage extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 35),
+                padding: const EdgeInsets.symmetric(horizontal: 45),
                 child: TextField(
+                  autofocus: true,
+                  onSubmitted: (value) {
+                    if (value.isEmpty) {
+                      showAlertDialog(context, "Atenção", "Prencha campo");
+                    } else {
+                      storage.setText(controllerText.text);
+                    }
+                  },
+                  controller: controllerText,
+                  textAlign: TextAlign.center,
                   decoration: InputDecoration(
+                    hintStyle: const TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    hintText: "Digite seu texto",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -87,7 +129,7 @@ class InformationPage extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 110),
+              const SizedBox(height: 100),
               const CustomTextButton(
                 text_1:
                     "Este link irá te direcionar para uma página externa, deseja continuar?",

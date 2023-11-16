@@ -1,20 +1,19 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:target_sistemas/shared/constant/custom_color.dart';
 
 class CustomTextField extends StatefulWidget {
-  final String text;
-  final Icon icon;
+  final String? text;
+  final Icon? icon;
   final bool? suffixIcon;
   final TextEditingController controller;
   final bool? inputSenha;
 
   const CustomTextField({
     Key? key,
-    required this.text,
-    required this.icon,
+    this.text = "",
+    this.icon,
     this.suffixIcon,
     required this.controller,
     this.inputSenha,
@@ -34,7 +33,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         Padding(
           padding: const EdgeInsets.only(left: 60, bottom: 10),
           child: Text(
-            widget.text,
+            widget.text!,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w400,
