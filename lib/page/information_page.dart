@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:target_sistemas/model/text_model.dart';
 import 'package:target_sistemas/shared/constant/custom_color.dart';
 import '../repositories/data/service/storage_service.dart';
 import '../shared/custom_show_alert.dart';
@@ -141,6 +140,7 @@ class _InformationPageState extends State<InformationPage> {
                     } else {
                       storage.setText(controllerText.text);
                       controllerText.text = "";
+                      obter();
                     }
                   },
                   controller: controllerText,
