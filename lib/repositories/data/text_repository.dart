@@ -13,43 +13,11 @@ class TextRepository {
 
   Future<void> deleteText(String key, int i) async {
     List<String> listText = await getStringList(key);
-    //implementação em andamento
-    listText.remove(i);
-    setStringList(key, listText);
+    if (i >= 0 && i < listText.length) {
+      listText.removeAt(i);
+      setStringList(key, listText);
+    } else {
+      throw Exception("Índice inválido para remoção");
+    }
   }
 }
-
-
-
-
-
-
-
-
-// import 'package:shared_preferences/shared_preferences.dart';
-
-// class TextReposytory {
-//   static const _key = "txtList";
-
-//   Future<void> addText(String text) async {
-//     List<String> textList = await getTextList();
-//     textList.add(text);
-//     _saveText(textList);
-//   }
-
-//   Future<List<String>> getTextList() async {
-//     final SharedPreferences prefs = await SharedPreferences.getInstance();
-//     return prefs.getStringList(_key) ?? [];
-//   }
-
-//   Future<void> removeText(String text) async {
-//     List<String> textList = await getTextList();
-//     textList.remove(text);
-//     _saveText(textList);
-//   }
-
-//   void _saveText(List<String> textList) async {
-//     final SharedPreferences prefs = await SharedPreferences.getInstance();
-//     prefs.setStringList(_key, textList);
-//   }
-// }

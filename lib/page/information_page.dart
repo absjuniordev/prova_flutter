@@ -13,6 +13,7 @@ class InformationPage extends StatefulWidget {
 }
 
 class _InformationPageState extends State<InformationPage> {
+  final ScrollController _scrollController = ScrollController();
   StorageService storage = StorageService();
   var controllerText = TextEditingController(text: "");
   var _listText = [];
@@ -26,6 +27,7 @@ class _InformationPageState extends State<InformationPage> {
   obter() async {
     _listText = await storage.getTextList();
 
+    _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
     setState(() {});
   }
 
@@ -62,6 +64,8 @@ class _InformationPageState extends State<InformationPage> {
                   ),
                 ),
                 child: ListView.builder(
+                  controller: _scrollController,
+                  reverse: true,
                   itemCount: _listText.length,
                   itemBuilder: (itemBuilder, i) {
                     var list = _listText[i];
@@ -80,14 +84,40 @@ class _InformationPageState extends State<InformationPage> {
                             ),
                             const Spacer(flex: 3),
                             InkWell(
-                              onTap: () {},
+                              onTap: () async {},
                               child: const Icon(
                                 Icons.border_color,
                                 size: 38,
                               ),
                             ),
                             InkWell(
-                              onTap: () {},
+                              onTap: () async {
+                                showDialog(
+                                  context: context,
+                                  builder: (builder) {
+                                    return AlertDialog(
+                                      title: const Text("Alerta"),
+                                      content: const Text(
+                                          "Esta ação ira excluir o texto, deseja continuar?"),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text("Não"),
+                                        ),
+                                        TextButton(
+                                          onPressed: () async {
+                                            await storage.deleteText(i);
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text("Sim"),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
                               child: const Icon(
                                 Icons.cancel,
                                 color: Color.fromARGB(255, 228, 20, 5),
@@ -107,9 +137,10 @@ class _InformationPageState extends State<InformationPage> {
                   autofocus: true,
                   onSubmitted: (value) {
                     if (value.isEmpty) {
-                      showAlertDialog(context, "Atenção", "Prencha campo");
+                      showAlertDialog(context, "Atenção", "Preencha campo");
                     } else {
                       storage.setText(controllerText.text);
+                      controllerText.text = "";
                     }
                   },
                   controller: controllerText,
