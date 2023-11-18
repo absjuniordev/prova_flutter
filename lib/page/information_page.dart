@@ -12,7 +12,7 @@ class InformationPage extends StatefulWidget {
 }
 
 class _InformationPageState extends State<InformationPage> {
-  final ScrollController _scrollController = ScrollController();
+  // final ScrollController _scrollController = ScrollController();
   StorageService storage = StorageService();
   var controllerText = TextEditingController(text: "");
   var _listText = [];
@@ -26,7 +26,6 @@ class _InformationPageState extends State<InformationPage> {
   obter() async {
     _listText = await storage.getTextList();
 
-    _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
     setState(() {});
   }
 
@@ -63,8 +62,6 @@ class _InformationPageState extends State<InformationPage> {
                   ),
                 ),
                 child: ListView.builder(
-                  controller: _scrollController,
-                  reverse: true,
                   itemCount: _listText.length,
                   itemBuilder: (itemBuilder, i) {
                     var list = _listText[i];

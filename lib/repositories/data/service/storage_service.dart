@@ -5,7 +5,9 @@ class StorageService {
 
   Future<void> setText(String text) async {
     List<String> textList = await getTextList();
-    textList.add(text);
+    // textList.add(text);
+    //ajuste para facilitar a listage
+    textList.insert(0, text);
     _setTextLis(textList);
   }
 
