@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:target_sistemas/shared/constant/alerts/custom_show_alert_confrimacao.dart';
 import 'package:target_sistemas/shared/constant/custom_color.dart';
 import '../repositories/data/service/storage_service.dart';
 import '../shared/constant/alerts/custom_show_alert.dart';
@@ -12,7 +13,6 @@ class InformationPage extends StatefulWidget {
 }
 
 class _InformationPageState extends State<InformationPage> {
-  // final ScrollController _scrollController = ScrollController();
   StorageService storage = StorageService();
   var controllerText = TextEditingController(text: "");
   var _listText = [];
@@ -91,31 +91,7 @@ class _InformationPageState extends State<InformationPage> {
                             ),
                             InkWell(
                               onTap: () async {
-                                showDialog(
-                                  context: context,
-                                  builder: (builder) {
-                                    return AlertDialog(
-                                      title: const Text("Alerta"),
-                                      content: const Text(
-                                          "Esta ação ira excluir o texto, deseja continuar?"),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: const Text("Não"),
-                                        ),
-                                        TextButton(
-                                          onPressed: () async {
-                                            await storage.deleteText(i);
-                                            Navigator.pop(context);
-                                          },
-                                          child: const Text("Sim"),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
+                                showDeleteConfirmationDialog(context, i);
                               },
                               child: const Icon(
                                 Icons.cancel,
