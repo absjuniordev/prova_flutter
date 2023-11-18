@@ -5,7 +5,7 @@ import 'package:target_sistemas/repositories/mock_auth_serivce.dart';
 import 'package:target_sistemas/shared/constant/custom_color.dart';
 
 import '../../page/information_page.dart';
-import '../custom_show_alert.dart';
+import '../constant/alerts/custom_show_alert.dart';
 
 class CustomElevatedButtom extends StatefulWidget {
   final TextEditingController controllerUsuario;

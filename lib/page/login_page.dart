@@ -31,7 +31,7 @@ class LoginPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Spacer(
-                  flex: 2,
+                  flex: 5,
                 ),
                 CustomTextField(
                   text: "Usuário",
@@ -62,13 +62,16 @@ class LoginPage extends StatelessWidget {
                   controllerUsuario: controllerUsuario,
                 ),
                 const Spacer(
-                  flex: 2,
+                  flex: 3,
                 ),
                 const CustomTextButton(
                   text_1:
                       "Este link irá te direcionar para uma página externa, deseja continuar?",
                   text_2: "Politica de Privacidade",
-                )
+                ),
+                const Spacer(
+                  flex: 1,
+                ),
               ],
             ),
           ),

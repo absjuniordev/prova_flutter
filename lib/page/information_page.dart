@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:target_sistemas/shared/constant/custom_color.dart';
 import '../repositories/data/service/storage_service.dart';
-import '../shared/custom_show_alert.dart';
+import '../shared/constant/alerts/custom_show_alert.dart';
 import '../shared/widgets/custom_text_button.dart';
 
 class InformationPage extends StatefulWidget {
@@ -76,7 +76,10 @@ class _InformationPageState extends State<InformationPage> {
                             const Spacer(flex: 1),
                             Text(
                               list,
-                              style: const TextStyle(fontSize: 20),
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             const Spacer(flex: 3),
                             InkWell(
@@ -157,7 +160,7 @@ class _InformationPageState extends State<InformationPage> {
                   ),
                 ),
               ),
-              const SizedBox(height: 100),
+              const SizedBox(height: 85),
               const CustomTextButton(
                 text_1:
                     "Este link irá te direcionar para uma página externa, deseja continuar?",
