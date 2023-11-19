@@ -28,8 +28,6 @@ class _InformationPageState extends State<InformationPage> {
   obter() async {
     _listText.clear();
     _listText.addAll(await storage.getTextList());
-    // _listText = ObservableList.of(await storage.getTextList());
-    // // _listText = await storage.getTextList();
   }
 
   @override

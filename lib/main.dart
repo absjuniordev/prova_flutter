@@ -15,7 +15,8 @@ class MainApp extends StatelessWidget {
       title: 'Target Sistemas',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.green,
+          seedColor: Colors.white,
+          background: Colors.white,
         ),
       ),
       debugShowCheckedModeBanner: false,
