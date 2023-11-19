@@ -15,8 +15,8 @@ class SplashPage extends StatelessWidget {
             Navigator.push(
               context,
               PageTransition(
-                duration: const Duration(milliseconds: 1500),
-                type: PageTransitionType.fade,
+                duration: const Duration(seconds: 2),
+                type: PageTransitionType.theme,
                 child: const LoginPage(),
               ),
             );

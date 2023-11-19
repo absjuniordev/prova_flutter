@@ -13,6 +13,7 @@ class TextRepository {
 
   Future<void> deleteText(String key, int i) async {
     List<String> listText = await getStringList(key);
+
     if (i >= 0 && i < listText.length) {
       listText.removeAt(i);
       setStringList(key, listText);

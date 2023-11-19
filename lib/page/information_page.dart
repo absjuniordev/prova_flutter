@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
 import 'package:target_sistemas/shared/constant/alerts/custom_show_alert_confrimacao.dart';
 import 'package:target_sistemas/shared/constant/custom_color.dart';
 import '../repositories/data/service/storage_service.dart';
@@ -13,9 +15,9 @@ class InformationPage extends StatefulWidget {
 }
 
 class _InformationPageState extends State<InformationPage> {
-  StorageService storage = StorageService();
+  final storage = StorageService();
   var controllerText = TextEditingController(text: "");
-  var _listText = [];
+  final _listText = ObservableList<String>();
 
   @override
   void initState() {
@@ -24,9 +26,10 @@ class _InformationPageState extends State<InformationPage> {
   }
 
   obter() async {
-    _listText = await storage.getTextList();
-
-    setState(() {});
+    _listText.clear();
+    _listText.addAll(await storage.getTextList());
+    // _listText = ObservableList.of(await storage.getTextList());
+    // // _listText = await storage.getTextList();
   }
 
   @override
@@ -61,62 +64,68 @@ class _InformationPageState extends State<InformationPage> {
                     bottomLeft: Radius.elliptical(5, 130),
                   ),
                 ),
-                child: ListView.builder(
-                  itemCount: _listText.length,
-                  itemBuilder: (itemBuilder, i) {
-                    var list = _listText[i];
-                    obter();
-                    return Card(
-                      color: CustomColor().getFillColor(),
-                      margin: const EdgeInsets.all(8),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            const Spacer(flex: 1),
-                            Text(
-                              list,
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
+                child: Observer(
+                  builder: (_) => ListView.builder(
+                    itemCount: _listText.length,
+                    itemBuilder: (itemBuilder, i) {
+                      var list = _listText[i];
+
+                      return Card(
+                        color: CustomColor().getFillColor(),
+                        margin: const EdgeInsets.all(8),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              const Spacer(flex: 1),
+                              Observer(
+                                builder: (_) => Text(
+                                  list,
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ),
-                            ),
-                            const Spacer(flex: 3),
-                            InkWell(
-                              onTap: () async {},
-                              child: const Icon(
-                                Icons.border_color,
-                                size: 38,
+                              const Spacer(flex: 3),
+                              InkWell(
+                                onTap: () async {},
+                                child: const Icon(
+                                  Icons.border_color,
+                                  size: 38,
+                                ),
                               ),
-                            ),
-                            InkWell(
-                              onTap: () async {
-                                showDeleteConfirmationDialog(context, i);
-                              },
-                              child: const Icon(
-                                Icons.cancel,
-                                color: Color.fromARGB(255, 228, 20, 5),
-                                size: 40,
+                              InkWell(
+                                onTap: () async {
+                                  await showDeleteConfirmationDialog(
+                                      context, i);
+                                  await obter();
+                                },
+                                child: const Icon(
+                                  Icons.cancel,
+                                  color: Color.fromARGB(255, 228, 20, 5),
+                                  size: 40,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 45),
                 child: TextField(
                   autofocus: true,
-                  onSubmitted: (value) {
+                  onSubmitted: (value) async {
                     if (value.isEmpty) {
                       showAlertDialog(context, "Atenção", "Preencha campo");
                     } else {
-                      storage.setText(controllerText.text);
+                      await storage.setText(controllerText.text);
                       controllerText.text = "";
-                      obter();
+                      await obter();
                     }
                   },
                   controller: controllerText,
