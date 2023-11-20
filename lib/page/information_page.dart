@@ -17,7 +17,9 @@ class InformationPage extends StatefulWidget {
 class _InformationPageState extends State<InformationPage> {
   final storage = StorageService();
   var controllerText = TextEditingController(text: "");
+  final _inLineController = TextEditingController();
   final _listText = ObservableList<String>();
+  bool _isEditing = false;
 
   @override
   void initState() {
@@ -73,40 +75,63 @@ class _InformationPageState extends State<InformationPage> {
                         margin: const EdgeInsets.all(8),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              const Spacer(flex: 1),
-                              Observer(
-                                builder: (_) => Text(
-                                  list,
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                          child: _isEditing
+                              ? Row(
+                                  children: [
+                                    const Spacer(flex: 1),
+                                    TextFormField(
+                                      controller: _inLineController,
+                                      onFieldSubmitted: (value) async {
+                                        await storage.editiText(i, value);
+                                        await obter();
+                                        setState(() {
+                                          _isEditing = false;
+                                        });
+                                      },
+                                    ),
+                                    const Spacer(flex: 3),
+                                    InkWell(
+                                      onTap: () async {},
+                                      child: const Icon(
+                                        Icons.check_box,
+                                        size: 38,
+                                        color: Colors.green,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : Row(
+                                  children: [
+                                    const Spacer(flex: 1),
+                                    Text(
+                                      list,
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const Spacer(flex: 3),
+                                    InkWell(
+                                      onTap: () async {},
+                                      child: const Icon(
+                                        Icons.border_color,
+                                        size: 38,
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () async {
+                                        await showDeleteConfirmationDialog(
+                                            context, i);
+                                        await obter();
+                                      },
+                                      child: const Icon(
+                                        Icons.cancel,
+                                        color: Color.fromARGB(255, 228, 20, 5),
+                                        size: 40,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              const Spacer(flex: 3),
-                              InkWell(
-                                onTap: () async {},
-                                child: const Icon(
-                                  Icons.border_color,
-                                  size: 38,
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () async {
-                                  await showDeleteConfirmationDialog(
-                                      context, i);
-                                  await obter();
-                                },
-                                child: const Icon(
-                                  Icons.cancel,
-                                  color: Color.fromARGB(255, 228, 20, 5),
-                                  size: 40,
-                                ),
-                              ),
-                            ],
-                          ),
                         ),
                       );
                     },

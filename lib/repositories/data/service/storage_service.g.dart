@@ -57,6 +57,14 @@ mixin _$StorageService on _StorageService, Store {
     return _$deleteTextAsyncAction.run(() => super.deleteText(i));
   }
 
+  late final _$editiTextAsyncAction =
+      AsyncAction('_StorageService.editiText', context: context);
+
+  @override
+  Future<void> editiText(int i, String text) {
+    return _$editiTextAsyncAction.run(() => super.editiText(i, text));
+  }
+
   @override
   String toString() {
     return '''

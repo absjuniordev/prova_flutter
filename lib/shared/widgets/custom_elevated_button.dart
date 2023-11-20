@@ -76,14 +76,17 @@ class _CustomElevatedButtomState extends State<CustomElevatedButtom> {
     });
 
     if (!isPasswordValid(widget.controllerSenha.text)) {
+      // ignore: use_build_context_synchronously
       showAlertDialog(
           context, "Atenção", "A senha não pode ter menos que dois caracteres");
     } else if (widget.controllerUsuario.text.contains(' ')) {
+      // ignore: use_build_context_synchronously
       showAlertDialog(
           context, "Atenção", "O nome de usuário não pode conter espaços");
     }
 
     if (loginCorreto) {
+      // ignore: use_build_context_synchronously
       Navigator.push(
         context,
         PageTransition(

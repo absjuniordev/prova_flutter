@@ -21,4 +21,15 @@ class TextRepository {
       throw Exception("Índice inválido para remoção");
     }
   }
+
+  Future<void> editiText(String key, int i, String text) async {
+    List<String> listText = await getStringList(key);
+
+    if (i >= 0 && i < listText.length) {
+      listText[i] = text;
+      setStringList(key, listText);
+    } else {
+      throw Exception("Índice inválido para edição");
+    }
+  }
 }

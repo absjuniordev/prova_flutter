@@ -31,4 +31,9 @@ abstract class _StorageService with Store {
   Future<void> deleteText(int i) async {
     await Future.microtask(() => TextRepository().deleteText(key, i));
   }
+
+  @action
+  Future<void> editiText(int i, String text) async {
+    await Future.microtask(() => TextRepository().editiText(key, i, text));
+  }
 }
