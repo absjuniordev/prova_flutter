@@ -41,6 +41,22 @@ mixin _$StorageService on _StorageService, Store {
     });
   }
 
+  late final _$editingIndexAtom =
+      Atom(name: '_StorageService.editingIndex', context: context);
+
+  @override
+  int get editingIndex {
+    _$editingIndexAtom.reportRead();
+    return super.editingIndex;
+  }
+
+  @override
+  set editingIndex(int value) {
+    _$editingIndexAtom.reportWrite(value, super.editingIndex, () {
+      super.editingIndex = value;
+    });
+  }
+
   late final _$setTextAsyncAction =
       AsyncAction('_StorageService.setText', context: context);
 
@@ -107,10 +123,22 @@ mixin _$StorageService on _StorageService, Store {
   }
 
   @override
+  void startEditingItem(int index) {
+    final _$actionInfo = _$_StorageServiceActionController.startAction(
+        name: '_StorageService.startEditingItem');
+    try {
+      return super.startEditingItem(index);
+    } finally {
+      _$_StorageServiceActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 textList: ${textList},
-isEditing: ${isEditing}
+isEditing: ${isEditing},
+editingIndex: ${editingIndex}
     ''';
   }
 }

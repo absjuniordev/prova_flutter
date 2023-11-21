@@ -13,6 +13,9 @@ abstract class _StorageService with Store {
   @observable
   bool isEditing = false;
 
+  @observable
+  int editingIndex = -1;
+
   @action
   startEditing() {
     isEditing = true;
@@ -21,6 +24,14 @@ abstract class _StorageService with Store {
   @action
   endEditing() {
     isEditing = false;
+    editingIndex = -1;
+  }
+
+  @action
+  void startEditingItem(int index) {
+    endEditing();
+    editingIndex = index;
+    startEditing();
   }
 
   @action

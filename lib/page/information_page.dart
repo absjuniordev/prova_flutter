@@ -16,8 +16,8 @@ class InformationPage extends StatefulWidget {
 
 class _InformationPageState extends State<InformationPage> {
   final storage = StorageService();
-  var controllerText = TextEditingController(text: "");
-  final _inLineController = TextEditingController();
+  final _controllerText = TextEditingController(text: "");
+  final _inLineController = TextEditingController(text: "");
   final _listText = ObservableList<String>();
 
   @override
@@ -28,7 +28,10 @@ class _InformationPageState extends State<InformationPage> {
 
   obter() async {
     _listText.clear();
-    _listText.addAll(await storage.getTextList());
+    var textList = await storage.getTextList();
+    if (textList.isNotEmpty) {
+      _listText.addAll(textList);
+    }
   }
 
   @override
@@ -74,7 +77,7 @@ class _InformationPageState extends State<InformationPage> {
                         margin: const EdgeInsets.all(8),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: storage.isEditing
+                          child: storage.isEditing && storage.editingIndex == i
                               ? Row(
                                   children: [
                                     Expanded(
@@ -85,7 +88,9 @@ class _InformationPageState extends State<InformationPage> {
                                     InkWell(
                                       onTap: () async {
                                         await storage.editiText(
-                                            i, _inLineController.text);
+                                          i,
+                                          _inLineController.text,
+                                        );
                                         await obter();
                                         await storage.endEditing();
                                       },
@@ -93,6 +98,16 @@ class _InformationPageState extends State<InformationPage> {
                                         Icons.check_box,
                                         size: 38,
                                         color: Colors.green,
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () async {
+                                        await storage.endEditing();
+                                      },
+                                      child: const Icon(
+                                        Icons.cancel,
+                                        color: Color.fromARGB(255, 228, 20, 5),
+                                        size: 40,
                                       ),
                                     ),
                                   ],
@@ -110,8 +125,8 @@ class _InformationPageState extends State<InformationPage> {
                                     const Spacer(flex: 3),
                                     InkWell(
                                       onTap: () async {
-                                        await obter();
-                                        await storage.startEditing();
+                                        storage.startEditingItem(i);
+                                        _inLineController.text = list[i];
                                       },
                                       child: const Icon(
                                         Icons.border_color,
@@ -147,12 +162,12 @@ class _InformationPageState extends State<InformationPage> {
                               showAlertDialog(
                                   context, "Atenção", "Preencha campo");
                             } else {
-                              await storage.setText(controllerText.text);
-                              controllerText.text = "";
+                              await storage.setText(_controllerText.text);
+                              _controllerText.text = "";
                               await obter();
                             }
                           },
-                          controller: controllerText,
+                          controller: _controllerText,
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
                             hintStyle: const TextStyle(

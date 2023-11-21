@@ -12,16 +12,16 @@ Future<void> showDeleteConfirmationDialog(
         content: const Text("Esta ação irá excluir o texto, deseja continuar?"),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text("Não"),
-          ),
-          TextButton(
             onPressed: () async {
               await storage.deleteText(index);
               // ignore: use_build_context_synchronously
               Navigator.pop(context);
             },
             child: const Text("Sim"),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("Não"),
           ),
         ],
       );
