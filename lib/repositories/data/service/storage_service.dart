@@ -10,6 +10,19 @@ abstract class _StorageService with Store {
   @observable
   List<String> textList = [];
 
+  @observable
+  bool isEditing = false;
+
+  @action
+  startEditing() {
+    isEditing = true;
+  }
+
+  @action
+  endEditing() {
+    isEditing = false;
+  }
+
   @action
   Future<void> setText(String text) async {
     textList = await getTextList();

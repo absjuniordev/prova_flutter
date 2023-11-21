@@ -25,6 +25,22 @@ mixin _$StorageService on _StorageService, Store {
     });
   }
 
+  late final _$isEditingAtom =
+      Atom(name: '_StorageService.isEditing', context: context);
+
+  @override
+  bool get isEditing {
+    _$isEditingAtom.reportRead();
+    return super.isEditing;
+  }
+
+  @override
+  set isEditing(bool value) {
+    _$isEditingAtom.reportWrite(value, super.isEditing, () {
+      super.isEditing = value;
+    });
+  }
+
   late final _$setTextAsyncAction =
       AsyncAction('_StorageService.setText', context: context);
 
@@ -65,10 +81,36 @@ mixin _$StorageService on _StorageService, Store {
     return _$editiTextAsyncAction.run(() => super.editiText(i, text));
   }
 
+  late final _$_StorageServiceActionController =
+      ActionController(name: '_StorageService', context: context);
+
+  @override
+  dynamic startEditing() {
+    final _$actionInfo = _$_StorageServiceActionController.startAction(
+        name: '_StorageService.startEditing');
+    try {
+      return super.startEditing();
+    } finally {
+      _$_StorageServiceActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic endEditing() {
+    final _$actionInfo = _$_StorageServiceActionController.startAction(
+        name: '_StorageService.endEditing');
+    try {
+      return super.endEditing();
+    } finally {
+      _$_StorageServiceActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
-textList: ${textList}
+textList: ${textList},
+isEditing: ${isEditing}
     ''';
   }
 }
