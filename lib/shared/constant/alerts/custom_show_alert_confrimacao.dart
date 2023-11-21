@@ -14,7 +14,7 @@ Future<void> showDeleteConfirmationDialog(
           TextButton(
             onPressed: () async {
               await storage.deleteText(index);
-              // ignore: use_build_context_synchronously
+
               Navigator.pop(context);
             },
             child: const Text("Sim"),

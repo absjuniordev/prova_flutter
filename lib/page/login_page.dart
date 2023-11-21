@@ -9,9 +9,8 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController controllerUsuario =
-        TextEditingController(text: "abs.junnior");
-    TextEditingController controllerSenha = TextEditingController(text: "1234");
+    TextEditingController controllerUsuario = TextEditingController(text: "");
+    TextEditingController controllerSenha = TextEditingController(text: "");
 
     return SafeArea(
       child: Scaffold(
@@ -34,6 +33,7 @@ class LoginPage extends StatelessWidget {
                   flex: 5,
                 ),
                 CustomTextField(
+                  suffixIcon: false,
                   text: "Usuário",
                   icon: const Icon(
                     Icons.person,
@@ -47,6 +47,7 @@ class LoginPage extends StatelessWidget {
                 CustomTextField(
                   inputSenha: true,
                   suffixIcon: true,
+                  obscureText: true,
                   text: "Senha",
                   icon: const Icon(
                     Icons.lock,

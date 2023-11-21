@@ -17,6 +17,7 @@ dependencies:
   url_launcher: ^6.2.1
   mobx:
   flutter_mobx: ^2.1.1 
+  auto_size_text: 
  
   
 

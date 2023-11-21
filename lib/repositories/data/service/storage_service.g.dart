@@ -41,6 +41,22 @@ mixin _$StorageService on _StorageService, Store {
     });
   }
 
+  late final _$showPassWordAtom =
+      Atom(name: '_StorageService.showPassWord', context: context);
+
+  @override
+  bool get showPassWord {
+    _$showPassWordAtom.reportRead();
+    return super.showPassWord;
+  }
+
+  @override
+  set showPassWord(bool value) {
+    _$showPassWordAtom.reportWrite(value, super.showPassWord, () {
+      super.showPassWord = value;
+    });
+  }
+
   late final _$editingIndexAtom =
       Atom(name: '_StorageService.editingIndex', context: context);
 
@@ -101,6 +117,28 @@ mixin _$StorageService on _StorageService, Store {
       ActionController(name: '_StorageService', context: context);
 
   @override
+  dynamic enableShowPassWord() {
+    final _$actionInfo = _$_StorageServiceActionController.startAction(
+        name: '_StorageService.enableShowPassWord');
+    try {
+      return super.enableShowPassWord();
+    } finally {
+      _$_StorageServiceActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic desableShowPassWord() {
+    final _$actionInfo = _$_StorageServiceActionController.startAction(
+        name: '_StorageService.desableShowPassWord');
+    try {
+      return super.desableShowPassWord();
+    } finally {
+      _$_StorageServiceActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic startEditing() {
     final _$actionInfo = _$_StorageServiceActionController.startAction(
         name: '_StorageService.startEditing');
@@ -138,6 +176,7 @@ mixin _$StorageService on _StorageService, Store {
     return '''
 textList: ${textList},
 isEditing: ${isEditing},
+showPassWord: ${showPassWord},
 editingIndex: ${editingIndex}
     ''';
   }

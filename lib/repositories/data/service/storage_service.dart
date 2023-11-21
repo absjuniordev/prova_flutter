@@ -14,7 +14,20 @@ abstract class _StorageService with Store {
   bool isEditing = false;
 
   @observable
+  bool showPassWord = true;
+
+  @observable
   int editingIndex = -1;
+
+  @action
+  enableShowPassWord() {
+    showPassWord = true;
+  }
+
+  @action
+  desableShowPassWord() {
+    showPassWord = false;
+  }
 
   @action
   startEditing() {
