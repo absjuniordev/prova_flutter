@@ -4,6 +4,9 @@
 
 Este aplicativo possui duas interfaces interativas com o usuário. Nele, você poderá fazer o login do usuário e, em seguida, capturar informações, salvá-las, editá-las e excluí-las conforme necessário!
 
+### usuario: target
+### senha: 1234
+
 Foram utilizados os seguintes pacotes:
  * page_transition: ^2.1.0
  * shared_preferences: ^2.2.2

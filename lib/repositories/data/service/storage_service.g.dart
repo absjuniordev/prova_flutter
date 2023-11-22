@@ -41,6 +41,22 @@ mixin _$StorageService on _StorageService, Store {
     });
   }
 
+  late final _$loginInProgressAtom =
+      Atom(name: '_StorageService.loginInProgress', context: context);
+
+  @override
+  bool get loginInProgress {
+    _$loginInProgressAtom.reportRead();
+    return super.loginInProgress;
+  }
+
+  @override
+  set loginInProgress(bool value) {
+    _$loginInProgressAtom.reportWrite(value, super.loginInProgress, () {
+      super.loginInProgress = value;
+    });
+  }
+
   late final _$showPassWordAtom =
       Atom(name: '_StorageService.showPassWord', context: context);
 
@@ -176,6 +192,7 @@ mixin _$StorageService on _StorageService, Store {
     return '''
 textList: ${textList},
 isEditing: ${isEditing},
+loginInProgress: ${loginInProgress},
 showPassWord: ${showPassWord},
 editingIndex: ${editingIndex}
     ''';

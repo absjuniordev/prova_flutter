@@ -14,6 +14,9 @@ abstract class _StorageService with Store {
   bool isEditing = false;
 
   @observable
+  bool loginInProgress = false;
+
+  @observable
   bool showPassWord = true;
 
   @observable
