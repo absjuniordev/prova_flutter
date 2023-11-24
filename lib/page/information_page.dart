@@ -57,7 +57,7 @@ class _InformationPageState extends State<InformationPage> {
               Container(
                 margin:
                     const EdgeInsets.symmetric(vertical: 65, horizontal: 30),
-                height: MediaQuery.of(context).size.height / 2,
+                height: MediaQuery.of(context).size.height / 2.4,
                 decoration: BoxDecoration(
                   color: CustomColor().getFillColor(),
                   borderRadius: const BorderRadius.only(
@@ -73,9 +73,9 @@ class _InformationPageState extends State<InformationPage> {
                     var list = _listText[i];
                     return Card(
                       color: CustomColor().getFillColor(),
-                      margin: const EdgeInsets.all(6),
+                      margin: const EdgeInsets.all(5),
                       child: Padding(
-                        padding: const EdgeInsets.all(6),
+                        padding: const EdgeInsets.all(4),
                         child: storage.isEditing && storage.editingIndex == i
                             ? Row(
                                 children: [
@@ -97,19 +97,19 @@ class _InformationPageState extends State<InformationPage> {
                                       await obter();
                                       await storage.endEditing();
                                     },
-                                    child: const Icon(
+                                    child: Icon(
                                       Icons.check_box,
                                       size: 38,
-                                      color: Colors.green,
+                                      color: CustomColor().getIconCheckColor(),
                                     ),
                                   ),
                                   InkWell(
                                     onTap: () async {
                                       await storage.endEditing();
                                     },
-                                    child: const Icon(
+                                    child: Icon(
                                       Icons.cancel,
-                                      color: Color.fromARGB(255, 228, 20, 5),
+                                      color: CustomColor().getIconCancelColor(),
                                       size: 40,
                                     ),
                                   ),
@@ -142,9 +142,9 @@ class _InformationPageState extends State<InformationPage> {
                                           context, i);
                                       await obter();
                                     },
-                                    child: const Icon(
+                                    child: Icon(
                                       Icons.cancel,
-                                      color: Color.fromARGB(255, 228, 20, 5),
+                                      color: CustomColor().getIconCancelColor(),
                                       size: 40,
                                     ),
                                   ),
